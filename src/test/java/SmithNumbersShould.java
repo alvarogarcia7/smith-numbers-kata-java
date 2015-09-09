@@ -21,6 +21,6 @@ public class SmithNumbersShould {
     }
 
     private static boolean isSmith(int n) {
-        return false;
+        return n > 1;
     }
 }
