@@ -2,7 +2,7 @@
 
 Marc Manzano and I have practiced [this kata](http://www.solveet.com/exercises/N-mero-Smith/448) in java
 
-Warning: the Solveet description does not limit the Smith numbers to composite ones. The OEIS only considers Smith the composite
+Warning: the Solveet description does not limit the Smith numbers to composite ones. The AOEIS only considers Smith the composite
 
 ## Resources
 
