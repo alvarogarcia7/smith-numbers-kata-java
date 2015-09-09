@@ -20,7 +20,7 @@ public class SmithNumbersShould {
     }
 
     @Test
-    public void detect_the_smallest_non_smith_number_except_the_corner_cases() {
+    public void detect_the_smallest_non_smith_number_except_the_corner_cases(){
         assertThat(isSmith(6), is(false)); // DC(6)=2*3; S=5
     }
 
@@ -38,16 +38,64 @@ public class SmithNumbersShould {
     }
 
     private void areSmith(int... candidates) {
+
         for (int current : candidates) {
-            assertThat(isSmith(current), is(true));
+            try {
+                assertThat(isSmith(current), is(true));
+            }catch (AssertionError e){
+                System.out.println("failed for = " + current);
+                throw e;
+            }
         }
     }
 
+
     private static boolean isSmith(int n) {
-        final List<Integer> primes = Arrays.asList(2,7);
-        if(primes.contains(n)) {
-            return true;
+
+        if (0 == n || 1 == n) {
+            return false;
         }
+
+        int currentN = n; //addDigitsOf(n);
+        int factor = 1;
+        while (currentN > 1) {
+
+            if (isPrime(currentN)) {
+                return true;
+            } else {
+                factor = getNextFactorOf(n, factor);
+                currentN -= factor;
+            }
+
+        }
+        System.out.println("current n " + currentN);
+
         return false;
+    }
+
+    private static int getNextFactorOf(int n, int factor) {
+        if (factor == 1) {
+            factor = 2;
+        }
+        for (int i = factor; i <= n; i++) {
+            if (n % i == 0 && isPrime(i)) {
+                return i;
+            }
+        }
+        System.out.println("could not find nextFactor For = " + n + " with factor = " + factor);
+        return 0;
+    }
+
+    private static boolean isPrime(int currentN) {
+        return new BigInteger(String.valueOf(currentN)).isProbablePrime(100);
+    }
+
+    private static int addDigitsOf(int n) {
+        int digitSum = 0;
+        while (n > 0) {
+            digitSum += n % 10;
+            n /= 10;
+        }
+        return digitSum;
     }
 }
