@@ -2,6 +2,8 @@
 
 Marc Manzano and I have practiced [this kata](http://www.solveet.com/exercises/N-mero-Smith/448) in java
 
+Warning: the Solveet description does not limit the Smith numbers to composite ones. The OEIS only considers Smith the composite
+
 ## Resources
 
   * [First primes](https://primes.utm.edu/lists/small/10000.txt)
