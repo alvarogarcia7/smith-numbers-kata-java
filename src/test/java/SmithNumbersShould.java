@@ -15,6 +15,11 @@ public class SmithNumbersShould {
         assertThat(isSmith(1), is(false));
     }
 
+    @Test
+    public void detect_the_smallest_smith_number(){
+        assertThat(isSmith(2), is(true));
+    }
+
     private static boolean isSmith(int n) {
         return false;
     }
