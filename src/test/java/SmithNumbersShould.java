@@ -25,6 +25,11 @@ public class SmithNumbersShould {
         assertThat(isSmith(6), is(false)); // DC(6)=2*3; S=5
     }
 
+    @Test
+    public void detect_the_first_smith_number_after_the_smallest_non_smith_number() {
+        assertThat(isSmith(7), is(true)); // DC(7)=7; S=7
+    }
+
 
     private static boolean isSmith(int n) {
         return n > 1 && n < 6;
