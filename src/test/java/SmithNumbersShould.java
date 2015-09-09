@@ -63,8 +63,9 @@ public class SmithNumbersShould {
             if (isPrime(currentN)) {
                 return true;
             } else {
-                factor = getNextFactorOf(n, factor);
-                currentN -= factor;
+                int[] x = getNextFactorOf(n, factor);
+                factor = x[1];
+                currentN -= x[0];
             }
 
         }
@@ -73,17 +74,24 @@ public class SmithNumbersShould {
         return false;
     }
 
-    private static int getNextFactorOf(int n, int factor) {
+    private static int[] getNextFactorOf(int n, int factor) {
         if (factor == 1) {
             factor = 2;
         }
-        for (int i = factor; i <= n; i++) {
+        int allFactors = 0;
+        for (int i = factor+1; i <= n; i++) {
             if (n % i == 0 && isPrime(i)) {
-                return i;
+                while (n > 1) {
+                    if (n % i == 0) {
+                        allFactors += i;
+                        n /= i;
+                    }
+                }
+                return new int[]{allFactors, factor};
             }
         }
         System.out.println("could not find nextFactor For = " + n + " with factor = " + factor);
-        return 0;
+        return new int[]{0,0};
     }
 
     private static boolean isPrime(int currentN) {
