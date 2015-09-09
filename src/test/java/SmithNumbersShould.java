@@ -1,7 +1,8 @@
 import org.junit.Test;
 
 import java.math.BigInteger;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,14 +44,14 @@ public class SmithNumbersShould {
             try {
                 assertThat(isSmith(current), is(true));
             }catch (AssertionError e){
-                System.out.println("failed for = " + current);
+                System.err.println("failed for = " + current);
                 throw e;
             }
         }
     }
 
 
-    private static boolean isSmith(int n) {
+    private static boolean isSmith(final int n) {
 
         if (0 == n || 1 == n) {
             return false;
@@ -58,40 +59,49 @@ public class SmithNumbersShould {
 
         int currentN = n; //addDigitsOf(n);
         int factor = 1;
-        while (currentN > 1) {
 
-            if (isPrime(currentN)) {
-                return true;
-            } else {
-                int[] x = getNextFactorOf(n, factor);
-                factor = x[1];
-                currentN -= x[0];
+        while (currentN > 0) {
+            factor++;
+            System.out.println("getting Factors for " + n + ", " + factor);
+            final List<Integer> factors = getAllSameFactorsFor(n, factor);
+            for (int current : factors) {
+                if (isPrime(currentN)) {
+                    return true;
+                } else {
+                    currentN -= current;
+                }
+                factor = current;
             }
-
+            System.out.println("currentN= " + currentN + ", factor=" + factor);
+            if(factor > currentN){
+                break;
+            }
         }
         System.out.println("current n " + currentN);
 
         return false;
     }
 
-    private static int[] getNextFactorOf(int n, int factor) {
+    private static List<Integer> getAllSameFactorsFor(int n, int factor) {
         if (factor == 1) {
             factor = 2;
         }
-        int allFactors = 0;
-        for (int i = factor+1; i <= n; i++) {
+        List<Integer> fac = new ArrayList<>();
+        for (int i = factor; i <= n; i++) {
             if (n % i == 0 && isPrime(i)) {
-                while (n > 1) {
+                while (n >= i) {
                     if (n % i == 0) {
-                        allFactors += i;
+                        fac.add(i);
                         n /= i;
+                    } else {
+                        break;
                     }
                 }
-                return new int[]{allFactors, factor};
+                return fac;
             }
         }
         System.out.println("could not find nextFactor For = " + n + " with factor = " + factor);
-        return new int[]{0,0};
+        return Collections.EMPTY_LIST;
     }
 
     private static boolean isPrime(int currentN) {
