@@ -20,6 +20,12 @@ public class SmithNumbersShould {
         assertThat(isSmith(2), is(true));
     }
 
+    @Test
+    public void detect_the_smallest_non_smith_number_except_the_corner_cases() {
+        assertThat(isSmith(6), is(false)); // DC(6)=2*3; S=5
+    }
+
+
     private static boolean isSmith(int n) {
         return n > 1;
     }
