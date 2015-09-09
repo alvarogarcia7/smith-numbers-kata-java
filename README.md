@@ -6,7 +6,7 @@ Warning: the Solveet description does not limit the Smith numbers to composite o
 
 ## Resources
 
-  * [First primes](https://primes.utm.edu/lists/small/10000.txt)
+  * [10k First primes](https://primes.utm.edu/lists/small/10000.txt)
   * [Wolfram page about the Smith numbers](http://mathworld.wolfram.com/SmithNumber.html)
   * [Wikipedia page](https://en.wikipedia.org/wiki/Smith_number)
   * [AOEIS page about them](https://oeis.org/A006753)
