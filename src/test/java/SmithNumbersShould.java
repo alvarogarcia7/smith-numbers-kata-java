@@ -2,7 +2,6 @@ import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,7 +34,7 @@ public class SmithNumbersShould {
     public void detect_smith_numbers_from_oeis() {
         areSmith(4, 22, 27, 58, 85, 94, 121, 166, 202, 265, 274, 319, 346, 355, 378, 382, 391, 438, 454, 483, 517, 526,
                 535, 562, 576, 588, 627, 634, 636, 645, 648, 654, 663, 666, 690, 706, 728, 729, 762, 778, 825, 852, 861,
-                895, 913, 915, 922, 958, 985, 1086, 1111, 116);
+                895, 913, 915, 922, 958, 985, 1086, 1111, 1165);
     }
 
     private void areSmith(int... candidates) {
@@ -43,7 +42,7 @@ public class SmithNumbersShould {
         for (int current : candidates) {
             try {
                 assertThat(isSmith(current), is(true));
-            }catch (AssertionError e){
+            } catch (AssertionError e) {
                 System.err.println("failed for = " + current);
                 throw e;
             }
@@ -57,51 +56,29 @@ public class SmithNumbersShould {
             return false;
         }
 
-        int currentN = n; //addDigitsOf(n);
-        int factor = 1;
-
-        while (currentN > 0) {
-            factor++;
-            System.out.println("getting Factors for " + n + ", " + factor);
-            final List<Integer> factors = getAllSameFactorsFor(n, factor);
-            for (int current : factors) {
-                if (isPrime(currentN)) {
-                    return true;
-                } else {
-                    currentN -= current;
-                }
-                factor = current;
-            }
-            System.out.println("currentN= " + currentN + ", factor=" + factor);
-            if(factor > currentN){
-                break;
-            }
+        int digitsN = addDigitsOf(n);
+        int digitsPrimesN = 0;
+        for (Integer current : getPrimeFactors(n)) {
+            digitsPrimesN += addDigitsOf(current);
         }
-        System.out.println("current n " + currentN);
 
-        return false;
+        return digitsN == digitsPrimesN;
     }
 
-    private static List<Integer> getAllSameFactorsFor(int n, int factor) {
-        if (factor == 1) {
-            factor = 2;
+    private static List<Integer> getPrimeFactors(int n) {
+        List<Integer> primes = new ArrayList<>();
+        if(isPrime(n)) {
+            primes.add(n);
+            return primes;
         }
-        List<Integer> fac = new ArrayList<>();
-        for (int i = factor; i <= n; i++) {
-            if (n % i == 0 && isPrime(i)) {
-                while (n >= i) {
-                    if (n % i == 0) {
-                        fac.add(i);
-                        n /= i;
-                    } else {
-                        break;
-                    }
-                }
-                return fac;
+
+        for (int i = 2; i <= n; i++) {
+            while (n % i == 0 && isPrime(i)) {
+                primes.add(i);
+                n /= i;
             }
         }
-        System.out.println("could not find nextFactor For = " + n + " with factor = " + factor);
-        return Collections.EMPTY_LIST;
+        return primes;
     }
 
     private static boolean isPrime(int currentN) {
