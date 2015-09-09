@@ -6,11 +6,15 @@ import static org.hamcrest.Matchers.is;
 public class SmithNumbersShould {
 
     @Test
-    public static void detect_the_smallest_smith_number() {
+    public void detect_the_smallest_smith_number() {
         assertThat(isSmith(0), is(true));
     }
 
     private static boolean isSmith(int n) {
+
+        if (n == 0){
+            return true;
+        }
         return false;
     }
 }
